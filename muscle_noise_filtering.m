@@ -3,8 +3,17 @@ function filtered = muscle_noise_filtering(origin, Fs, Fc)
         Fc = 30;  % default Fc
     end
     [b,a] = butter(4,Fc/(Fs/2),'low'); % 4-order butter hp filter
-    filtered = filtfilt(b,a,origin');
-    filtered = filtered';
+
+    num_patients = size(origin,1);
+    filtered = cell(size(origin));
+    for i = 1:num_patients
+        temp = origin{i}';
+        temp = filtfilt(b,a,temp);
+        filtered{i} = temp';
+    end
+
+%     filtered = filtfilt(b,a,origin');
+%     filtered = filtered';
 %     t = linspace(0,length(origin)/Fs,length(origin));
 % 
 %     figure;

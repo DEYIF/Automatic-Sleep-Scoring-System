@@ -14,19 +14,22 @@ numberOfEpochs = length(record(3,:)')/(30*hdr.samples(3))
 %% plot 1 30 sec epoch of each signal
 figure(1);
 for i=1:size(record,1)
-    Fs = hdr.samples(i);
+    Fs = hdr.samples(i)
     (length(record(i,:)')/Fs);
     epochNumber = 1; % plot nth epoch of 30 seconds
     epochStart = (epochNumber*Fs*30);
     epochEnd = epochStart + 30*Fs;
     subplot(size(record,1),1,i);
     signal = record(i,epochStart:epochEnd);
+    size(signal)
     plot((1:length(signal))/Fs,signal);
     ylabel(hdr.label(i));
     xlim([1 30]);
 end
 sgtitle(['30 seconds epoch #' num2str(epochNumber)]);
 set(gcf,'color','w');
+
+record_short = record(:,3000000:end);
 
 
 %% plot Hypnogram (sleep stages over time)
